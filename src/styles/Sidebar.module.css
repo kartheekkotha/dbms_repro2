@@ -1,0 +1,30 @@
+/* styles/Sidebar.module.css */
+.sidebar {
+    width: 180px;
+    top:140px;
+    background-color: #004aad; /* Light blur effect */
+    padding: 20px;
+    position: absolute;
+    height: 100vh-95px;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+    width: 150px;
+  }
+  
+  .ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .li {
+    margin-bottom: 10px;
+  }
+  
+  .input[type="radio"] {
+    margin-right: 1px;
+    margin-left: 1px;
+  }
+  

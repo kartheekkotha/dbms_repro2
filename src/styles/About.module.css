@@ -1,0 +1,16 @@
+/* styles/About.module.css */
+.box {
+    background-color: #013263; /* Dark blue */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    text-align: center;
+    width: 60%;
+  }
+  
+  .info {
+    font-size: 20px;
+    margin: 10px 0;
+  }
+  

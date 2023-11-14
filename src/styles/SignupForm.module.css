@@ -1,0 +1,57 @@
+/* styles/SignupForm.module.css */
+.container {
+    background-color: #001f3f; /* Dark blue */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 300px;
+    text-align: center;
+    line-height: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .radioGroup {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+  }
+  
+  .input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  .label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 20px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    
+  }
+  
+  .button:hover {
+    background-color: darkblue;
+  }
+  

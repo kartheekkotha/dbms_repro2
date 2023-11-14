@@ -1,0 +1,29 @@
+/* styles/StudProfile.module.css */
+.container {
+    background-color: #001f3f;
+    color: white; /* Dark blue text */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 400px;
+    text-align: left;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .button:hover {
+    background-color: darkblue;
+  }
+  
+  .bold {
+    font-weight: bold;
+  }
+  

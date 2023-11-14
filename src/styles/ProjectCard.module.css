@@ -1,0 +1,49 @@
+/* styles/ProjectCard.module.css */
+.card {
+    background-color: #022d58;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 300px;
+    margin-top: 25px;
+    width: 50%;
+    line-height: 1px;
+}
+  
+  .header {
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .content {
+    top: 5px;
+    display: flex;
+    flex-direction: column;
+    line-height: 1px;
+  }
+  
+  .left,
+  .right {
+    line-height: 1px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  
+  .info {
+    font-size: 15px;
+  }
+  
+  .info,
+  .date,
+  .description {
+    font-size: 15px;
+    line-height: 1px;
+  }
+  

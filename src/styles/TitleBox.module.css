@@ -1,0 +1,17 @@
+
+.title {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+
+  .header {
+    background-color: #04306d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    padding: 10px;
+  }
+  
