@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "mysql2": "^3.6.3",
+    "next": "13.5.5",
     "react": "^18",
     "react-dom": "^18",
-    "next": "13.5.5"
+    "react-hook-form": "^7.48.2"
   }
 }

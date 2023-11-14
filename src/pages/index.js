@@ -11,7 +11,6 @@ const Home = () => {
     <div className={styles.container}>
       <TitleBox/>  
       <StartPage/>
-      
     </div>
   );
 };

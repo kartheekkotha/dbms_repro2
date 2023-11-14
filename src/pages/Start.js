@@ -7,8 +7,11 @@ const StartPage = () => {
   console.log("StartPage");
   return (
     <div className={styles.container}>
-    <Link href="/SignUp">
-        <button className={styles.button}>SignUp</button>
+    <Link href="/StudentSignUpPage">
+        <button className={styles.button}>Student SignUp</button>
+    </Link> 
+    <Link href="/ProfessorSignUpPage">
+        <button className={styles.button}>Professor SignUp</button>
     </Link> 
     <Link href="/Login">
       <button className={styles.button}>Login</button>
