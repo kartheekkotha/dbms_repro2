@@ -4,10 +4,20 @@ import Link from 'next/link';
 import styles from '../styles/SignupForm.module.css';
 import { useState , useEffect} from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 const StudentSignUp = () => {
+  const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [departments, setDepartments] = useState([]);
+  const [loginError, setLoginError] = useState(false);
+  const clearInputValues = () => {
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('name').value = '';
+    document.getElementById('batch').value = '';
+    document.getElementById('dept_id').value = '';
+  };
   useEffect(() => {
     // Fetch departments from the server
     const fetchDepartments = async () => {
@@ -32,22 +42,23 @@ const StudentSignUp = () => {
         },
         body: JSON.stringify(data),
       });
-
       if (response.ok) {
-        console.log('Student Added successfully:', result);
+        console.log('Student Added successfully:');
         // Reset the form data
-        setValue('email', '');
-        setValue('password', '');
-        setValue('name', '');
-        setValue('gradYear', '');
-        setValue('dept_id', '');
+        clearInputValues();
+        router.push('/');
         // Reset the form
         // Handle success, e.g., show a success message to the user
       } else {
         // Handle errors
+        setLoginError(true);
+            // Clear input fields on login failure
+        clearInputValues();
       }
     } catch (error) {
       console.error('Error submitting form:', error);
+      clearInputValues();
+      setLoginError(true);
     }
   };
   return (
@@ -106,6 +117,9 @@ const StudentSignUp = () => {
       {/* <Link href="/projects" passHref>
         <button type="submit" className={styles.button}>Continue</button>
       </Link> */}
+      {loginError && (
+        <p style={{ color: 'red' }}>singup failed. Please check.</p>
+      )}
     </div>
   );
 };

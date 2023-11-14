@@ -1,12 +1,16 @@
 // pages/profprofile.js
 import React from 'react';
 import Navbar from '../components/Navbar';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styles from '../styles/StudProfile.module.css';
 import ProjectCard from '../components/ProjectCard';
-import OURCard from '../components/OURCard';
+import OURCard from '../components/OURcard';
 
 const ProfProfilePage = () => {
+  const router = useRouter();
+  const { professor_email_id } = router.query;
+  console.log(professor_email_id);
   const studentData = {
     name: 'John Dolly',
     department: 'Computer Science',

@@ -58,13 +58,13 @@ create table Domain(
 -- create table to handle the login and sign up details
 create table StudentUser(
   email_id varchar(50) primary key,
-  password varchar(50),
+  password varchar(255),
   foreign key (email_id) references Student(student_email_id)
 );
 
 create table ProfessorUser(
   email_id varchar(50) primary key,
-  password varchar(50),
+  password varchar(255),
   foreign key (email_id) references Professor(professor_email_id)
 );
 

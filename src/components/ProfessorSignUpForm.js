@@ -4,10 +4,19 @@ import Link from 'next/link';
 import styles from '../styles/SignupForm.module.css';
 import { useState , useEffect} from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 const ProfessorSignUp = () => {
+  const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [departments, setDepartments] = useState([]);
+  const [loginError, setLoginError] = useState(false);
+  const clearInputValues = () => {
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('name').value = '';
+    document.getElementById('dept_id').value = '';
+  };
   useEffect(() => {
     // Fetch departments from the server
     const fetchDepartments = async () => {
@@ -34,16 +43,17 @@ const ProfessorSignUp = () => {
       });
 
       if (response.ok) {
-        console.log('Profeesor Added successfully:', result);
+        console.log('Profeesor Added successfully:');
         // Reset the form data
-        setValue('email', '');
-        setValue('password', '');
-        setValue('name', '');
-        setValue('dept_id', '');
+        clearInputValues();
+        router.push('/');
         // Reset the form
         // Handle success, e.g., show a success message to the user
       } else {
         // Handle errors
+        setLoginError(true);
+            // Clear input fields on login failure
+        clearInputValues();
       }
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -97,6 +107,9 @@ const ProfessorSignUp = () => {
       {/* <Link href="/projects" passHref>
         <button type="submit" className={styles.button}>Continue</button>
       </Link> */}
+      {loginError && (
+        <p style={{ color: 'red' }}>sign up failed. Please check.</p>
+      )}
     </div>
   );
 };

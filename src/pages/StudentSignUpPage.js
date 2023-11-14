@@ -10,7 +10,7 @@ const StudentSignUpPage = () => {
   return (
     <div>
       <Head>
-        <title>Sign Up Page</title>
+        <title>Student Sign Up Page</title>
       </Head>
       <StudentSignupForm />
       <Link href="/">

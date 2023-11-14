@@ -13,8 +13,11 @@ const StartPage = () => {
     <Link href="/ProfessorSignUpPage">
         <button className={styles.button}>Professor SignUp</button>
     </Link> 
-    <Link href="/Login">
-      <button className={styles.button}>Login</button>
+    <Link href="/StudentLoginPage">
+      <button className={styles.button}>Student Login</button>
+    </Link>
+    <Link href="/ProfessorLoginPage">
+      <button className={styles.button}>Professor Login</button>
     </Link>
     </div>
   );

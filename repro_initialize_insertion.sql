@@ -84,4 +84,6 @@ insert into Domain (domain_id, domain_name, department) values ('POLY', 'Polymer
 insert into Domain (domain_id, domain_name, department) values ('PE', 'Process Engineering', 'CHE');
 
 insert into Student (sname, student_email_id, batch, dept_id) values ('Kartheek' , 'kk746@snu.edu.in', '2025', 'CSE');
-insert into Professor (pname, professor_email_id, dept_id) values ('Snehasis','snehasisMukherjee@gmail.com', 'CSE');
+insert into StudentUser (email_id, password) values ('kk746@snu.edu.in',"12345")
+insert into Professor (pname, professor_email_id, dept_id) values ('Professor1','testProfessor@gmail.com', 'CSE');
+insert into ProfessorUser (email_id, password) values ('testProfessor@gmail.com' , "123456789")

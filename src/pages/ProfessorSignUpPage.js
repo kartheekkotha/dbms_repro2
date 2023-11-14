@@ -10,7 +10,7 @@ const ProfessorSignUpPage = () => {
   return (
     <div>
       <Head>
-        <title>Sign Up Page</title>
+        <title>Professor Sign Up Page</title>
       </Head>
       <ProfessorSignUp />
       <Link href="/">
