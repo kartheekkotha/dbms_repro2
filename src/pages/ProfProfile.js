@@ -1,49 +1,69 @@
-// pages/profprofile.js
-import React from 'react';
-import Navbar from '../components/Navbar';
+// pages/studprofile.js
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Navbar from '../components/Navbar';
 import Link from 'next/link';
 import styles from '../styles/StudProfile.module.css';
-import ProjectCard from '../components/ProjectCard';
-import OURCard from '../components/OURcard';
+import ProfessorDetailsComponent from '../components/ProfessorDetailsComponent';
+import ProjectCard from '../components/ProfessorProjectCard';
+import OURCard from '../components/ProfessorOURCard';
+import { useAuth } from '../context/AuthContext';
 
 const ProfProfilePage = () => {
+  const { user, logout } = useAuth();
   const router = useRouter();
-  const { professor_email_id } = router.query;
-  console.log(professor_email_id);
-  const studentData = {
-    name: 'John Dolly',
-    department: 'Computer Science',
-    graduatingYear: '2023',
-    email: 'john.doe@example.com',
-    interests: 'Web Development, Machine Learning',
-    linkedin: 'https://www.linkedin.com/in/johndoe/',
-    github: 'https://github.com/johndoe',
-  };
+  const professor_email_id = user ? user.email_id : null;
+  console.log("Professor Page of :",professor_email_id);
+  const [ProfessorDetails, setProfessorDetails] = useState({});
+  const [ProfessorProjects, setProfessorProjects] = useState([]);
+  const [ProfessorOURs, setProfessorOURs] = useState([]);
+  useEffect(() => {
+    if (professor_email_id) {
+    // Fetch student details
+    fetch(`/api/getProfessorDetails?Professor_email_id=${professor_email_id}`)
+      .then(response => response.json())
+      .then(data => setProfessorDetails(data))
+      .catch(error => console.error('Error fetching student details:', error));
 
-  return (
+    // Fetch student projects
+    fetch(`/api/getProfessorProjects?professorID=${professor_email_id}`)
+
+      .then(response => response.json())
+      .then(data => setProfessorProjects(data))
+      .catch(error => console.error('Error fetching student projects:', error));
+
+      fetch(`/api/getProfessorOURs?professorID=${professor_email_id}`)
+      .then(response => response.json())
+      .then(data => setProfessorOURs(data))
+      .catch(error => console.error('Error fetching projects under professor guidance:', error));
+    }
+    }, [professor_email_id])
+  console.log(ProfessorDetails);
+  console.log("stud Projects",ProfessorProjects);
+  console.log("Projects under prof",ProfessorOURs);
+  const handleLogout = () => {
+    logout();
+    router.push('/'); // Navigate to the home page after logout
+  };
+  return(
     <div>
-      <Navbar />
       <div className={styles.container}>
-        <h1>Professor Profile</h1>
-        <p>Name: {studentData.name}</p>
-        <p>Department: {studentData.department}</p>
-        <p>Graduating Year: {studentData.graduatingYear}</p>
-        <p>Email ID: {studentData.email}</p>
-        <p>Interests: {studentData.interests}</p>
-        <p>LinkedIn: {studentData.linkedin}</p>
-        <p>GitHub: {studentData.github}</p>
-        <Link href="/addproject" passHref> {/*PUT IN THE BACKEND FOR THESE BUTTONS*/}
+      {/* <button onClick={handleLogout}>Logout</button> */}
+      <Navbar/>
+        <h1>Student Profile</h1>
+        <ProfessorDetailsComponent ProfessorDetails={ProfessorDetails} />
+        {/* Button to edit the studentDetials */}
+        <Link href="/editProfessorDetails" passHref>
+          <button className={styles.button}>Edit Profile</button>
+        </Link>
+        <ProjectCard projects= {ProfessorProjects}/> 
+        <Link href="/ProfessorAddProject" passHref> 
           <button className={styles.button}>Add Project</button>
         </Link>
-        <Link href="/addproject" passHref>
-          <button className={styles.button}>Add OUR</button>
+        <OURCard projects= {ProfessorOURs}/>
+        <Link href="/ProfessorAddOUR" passHref> 
+          <button className={styles.button}>Add Project</button>
         </Link>
-        <h2 className={styles.bold}>Bookmarks</h2>
-        <h2 className={styles.bold}>Projects</h2>
-        <ProjectCard /> {/*KARTHeEK PASS PROPS HERE*/} 
-        <h2 className={styles.bold}>OURs</h2>
-        <OURCard/> {/*KARTHeEK PASS PROPS HERE too*/} 
       </div>
     </div>
   );

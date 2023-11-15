@@ -24,12 +24,13 @@ const OURCard = ({ projects }) => {
             <tr>
               <th>Project ID</th>
               <th>Title</th>
-              <th>Mentor</th>
+              <th>Student</th>
               <th>Details</th>
               <th>Department</th>
               <th>Domains</th>
               <th>Status</th>
               <th>Date of Creation</th>
+              <th>Edit</th> 
                {/* New column for the Edit button */}
               {/* Add more columns as needed */}
             </tr>
@@ -39,7 +40,13 @@ const OURCard = ({ projects }) => {
               <tr key={project.project_id}>
                 <td>{project.project_id}</td>
                 <td>{project.title}</td>
-                <td>{project.pname}</td>
+                <td>
+                  {project.students.map((student) => (
+                    <div key={student.student_email_id}>
+                      {student.sname}
+                    </div>
+                  ))}
+                </td>
                 <td>{project.details}</td>
                 <td>{project.department}</td>
                 <td>
@@ -51,6 +58,9 @@ const OURCard = ({ projects }) => {
                 </td>
                 <td>{project.work_status}</td>
                 <td>{project.date_of_creation}</td>
+                <td>
+                  <button className={styles.editButton}>Edit</button>
+                </td>
                 {/* Add more cells as needed */}
               </tr>
             ))}
