@@ -24,10 +24,10 @@ const Navbar = () => {
   return (
     <div className={styles.navbar}>
       <nav className={styles.nav}>
-        <Link href="/pages/Projects" passHref>
+        <Link href="/Projects" passHref>
           <span className={styles.link}>Projects</span>
         </Link>
-        <Link href="/pages/OURs" passHref>
+        <Link href="/OURs" passHref>
           <span className={styles.link}>Ours</span>
         </Link>
         <Link href="/aboutUs" passHref>

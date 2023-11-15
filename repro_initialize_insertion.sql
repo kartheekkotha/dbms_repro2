@@ -90,5 +90,5 @@ insert into StudentUser (email_id, password) values ('ta123@snu.edu.in',"12345")
 insert into Professor (pname, professor_email_id, dept_id) values ('Professor1','testProfessor@gmail.com', 'CSE');
 insert into ProfessorUser (email_id, password) values ('testProfessor@gmail.com' , "123456789");
 insert into Professor (pname, professor_email_id, dept_id) values ('Professor2','testProfessor2@gmail.com', 'CSE');
-insert into ProfessorUser (email_id, password) values ('testProfesso2r@gmail.com' , "123456789");
+insert into ProfessorUser (email_id, password) values ('testProfesso2@gmail.com' , "123456789");
 

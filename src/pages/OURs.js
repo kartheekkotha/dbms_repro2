@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
+import OURCard from '@/components/OURcard';
 
 const OURs = () => {
   const ourData = {
@@ -17,7 +18,7 @@ const OURs = () => {
     <div>
       <Navbar />
       <Sidebar />
-      <OURCard {...ourData} />
+      {/* <OURCard {...ourData} /> */}
     </div>
   );
 };

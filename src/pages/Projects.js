@@ -18,7 +18,7 @@ const Projects = () => {
       <Navbar />
       <Sidebar />
       
-      <ProjectCard {...projectData[0]} />
+      {/* <ProjectCard {...projectData[0]} /> */}
     </div>
   );
 };
