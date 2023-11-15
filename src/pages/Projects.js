@@ -1,24 +1,31 @@
 // pages/projects.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
-import ProjectCard  from '../components/ProjectCard';
+import ProjectCard  from '../components/AllProjectCard';
+import styles from "../styles/Project.module.css";
 
 const Projects = () => {
-    const projectData = [{
-        title: 'Project Name',
-        studentName: 'KKotha',
-        domain: 'AI',
-        dept: 'CSE',
-        date: '2023-11-01',
-        description: 'A brief project description goes here.',
-      }];
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    // Fetch projects from the API endpoint
+    fetch('/api/getProjects')
+      .then((response) => response.json())
+      .then((data) => {
+        setProjects(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching projects:', error);
+      });
+  }, []);
   return (
     <div>
       <Navbar />
-      <Sidebar />
-      
-      {/* <ProjectCard {...projectData[0]} /> */}
+      <div className = {styles.contents}>
+        <Sidebar/>
+        <ProjectCard projects={projects} className={styles.projectCard} />
+      </div>
     </div>
   );
 };
