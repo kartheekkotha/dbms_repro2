@@ -9,11 +9,11 @@ const Projects = () => {
   const [sortBy, setSortBy] = useState('none'); // Initial sorting option
   const [sortOrder, setSortOrder] = useState('asc'); // Initial sort order
   const [searchWords, setSearchWords] = useState('');
-
+  const [statusFilter, setStatusFilter] = useState('all'); 
   // Fetch default projects when the component mounts
   useEffect(() => {
     fetchDefaultProjects();
-  }, []); // Empty dependency array ensures it runs only once
+  }, [statusFilter]); // Empty dependency array ensures it runs only once
 
   const fetchDefaultProjects = () => {
     // Fetch default projects without sorting or search criteria
@@ -29,7 +29,7 @@ const Projects = () => {
 
   const handleSortSubmit = () => {
     // Fetch projects from the API endpoint with the current sorting option, sort order, and search words
-    fetch(`/api/getProjects?sortBy=${sortBy}&sortOrder=${sortOrder}&searchWords=${searchWords}`)
+    fetch(`/api/getProjects?sortBy=${sortBy}&sortOrder=${sortOrder}&searchWords=${searchWords}&statusFilter=${statusFilter}`)
       .then((response) => response.json())
       .then((data) => {
         setProjects(data);
@@ -45,7 +45,9 @@ const Projects = () => {
   const handleSortOrderChange = (order) => {
     setSortOrder(order);
   };
-
+  const handleStatusFilterChange = (status) => {
+    setStatusFilter(status);
+  };
   return (
     <div>
       <Navbar />
@@ -140,6 +142,17 @@ const Projects = () => {
                 <label htmlFor="desc">Descending</label>
               </li>
             </ul>
+          </div>
+          <div className={styles.section}>
+            <h2>Status Filter:</h2>
+            <select
+              value={statusFilter}
+              onChange={(e) => handleStatusFilterChange(e.target.value)}
+            >
+              <option value="all">All</option>
+              <option value="Completed">Completed</option>
+              <option value="Incomplete">Incomplete</option>
+            </select>
           </div>
           <button className={styles.button} onClick={handleSortSubmit}>
             Submit
