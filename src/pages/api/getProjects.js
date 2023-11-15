@@ -4,9 +4,12 @@ import db from '../db';
 export default async (req, res) => {
   if (req.method === 'GET') {
     try {
-      // Implement your logic to fetch projects from the database based on user_email
-      const sql =
-        `SELECT 
+      // Get sorting options, sort order, and search words from query parameters
+      const { sortBy, sortOrder, searchWords } = req.query;
+
+      // Build the SQL query dynamically based on the provided parameters
+      let sql = `
+        SELECT 
           p.project_id, p.title, p.details, p.work_status, p.date_of_creation, p.department, p.is_research,
           d.domain_id, d.domain_name,
           s.student_email_id, s.sname,
@@ -19,14 +22,32 @@ export default async (req, res) => {
           LEFT JOIN Student s ON ps.student_email_id = s.student_email_id
           LEFT JOIN Project_Professor pp ON p.project_id = pp.project_id
           LEFT JOIN Professor pr ON pp.professor_email_id = pr.professor_email_id
-        WHERE p.is_research = 0`;
+        WHERE p.is_research = 0
+      `;
+
+      // Add conditions for sorting and searching
+      if (sortBy && sortOrder && sortBy !== 'none' && sortOrder !== 'none') {
+        sql += ` ORDER BY ${sortBy} ${sortOrder.toUpperCase()}`;
+      }
+
+      if (searchWords) {
+        sql += `
+          AND (
+            p.title LIKE '%${searchWords}%'
+            OR p.details LIKE '%${searchWords}%'
+            OR d.domain_name LIKE '%${searchWords}%'
+            OR s.sname LIKE '%${searchWords}%'
+            OR pr.pname LIKE '%${searchWords}%'
+            OR p.department LIKE '%${searchWords}%'
+          )
+        `;
+      }
 
       db.query(sql, [], (err, results) => {
         if (err) {
           console.error('Error fetching projects:', err);
           res.status(500).json({ error: 'Error fetching projects' });
         } else {
-            console.log("Results",results);
           // Process the results to create a structured project list
           const projectList = results.reduce((acc, project) => {
             const existingProject = acc.find((p) => p.project_id === project.project_id);
@@ -37,14 +58,12 @@ export default async (req, res) => {
                   domain_id: project.domain_id,
                   domain_name: project.domain_name,
                 });
-              }
-              if (project.student_email_id) {
+              } else if (project.student_email_id) {
                 existingProject.students.push({
                   student_email_id: project.student_email_id,
                   sname: project.sname,
                 });
-              }
-              if (project.professor_email_id) {
+              } else if (project.professor_email_id) {
                 existingProject.professors.push({
                   professor_email_id: project.professor_email_id,
                   pname: project.pname,
@@ -69,8 +88,8 @@ export default async (req, res) => {
                 professors: project.professor_email_id
                   ? [{ professor_email_id: project.professor_email_id, pname: project.pname }]
                   : [],
+                role: project.student_email_id ? 'Student' : 'Professor',
               };
-              console.log(newProject);
               acc.push(newProject);
             }
             return acc;

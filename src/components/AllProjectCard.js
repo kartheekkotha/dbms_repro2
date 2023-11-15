@@ -1,6 +1,6 @@
 // components/ProjectCard.js
 import React from 'react';
-import styles from '../styles/ProjectCard.module.css';
+import styles from '../styles/AllProjectCard.module.css';
 
 const ProjectCard = ({ projects, userName }) => {
   console.log("ProjectCard Projects", projects);
@@ -16,6 +16,7 @@ const ProjectCard = ({ projects, userName }) => {
     return (
       <div>
         <h2>Project List</h2>
+        <div className={styles.scroll}>
         <table className={styles.projectTable}>
           {/* Display your project data in a table */}
           {/* You can customize this based on your project data structure */}
@@ -55,11 +56,13 @@ const ProjectCard = ({ projects, userName }) => {
                     ? project.students.map((student) => student.sname).join(', ')
                     : project.professors.map((professor) => professor.pname).join(', ')}
                 </td>
+                <td>{project.role}</td>
                 {/* Add more cells as needed */}
               </tr>
             ))}
           </tbody>
         </table>
+        </div> 
       </div>
     );
   }

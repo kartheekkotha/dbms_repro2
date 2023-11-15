@@ -48,11 +48,20 @@
   }
   
   /* ProjectCard.module.css */
+.scroll {
+  margin:4px , 4px;
+  padding: 4px;
+  width: 80%;
+  height: 100%;
+  overflow: scroll;
+  white-space: nowrap;
+}
 
 .projectTable {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  background-color: white;
 }
 
 .projectTable th, .projectTable td {

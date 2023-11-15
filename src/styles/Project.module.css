@@ -17,5 +17,47 @@
   .contents {
     display:flex;
     flex-direction: row;
+    height: 100%;
   }
   
+
+  /* styles/Sidebar.module.css */
+.sidebar {
+    width: 180px;
+    top:140px;
+    background-color: #004aad; /* Light blur effect */
+    padding: 20px;
+    /* position: absolute; */
+    height: 100vh-95px;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+    width: 150px;
+  }
+  
+  .ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .li {
+    margin-bottom: 10px;
+  }
+  
+  .input[type="radio"] {
+    margin-right: 1px;
+    margin-left: 1px;
+  }
+  
+  .button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+  }
