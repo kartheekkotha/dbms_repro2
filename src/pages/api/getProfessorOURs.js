@@ -39,7 +39,7 @@ export default async (req, res) => {
                   domain_name: project.domain_name,
                 });
               }
-              if (project.student_id) {
+              if (project.student_email_id) {
                 existingProject.students.push({
                   student_email_id: project.student_email_id,
                   sname: project.sname,

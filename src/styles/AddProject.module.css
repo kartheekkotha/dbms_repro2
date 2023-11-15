@@ -1,0 +1,93 @@
+/* styles/SignupForm.module.css */
+.container {
+    background-color: #001f3f; /* Dark blue */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 75%;
+    text-align: center;
+    line-height: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .radioGroup {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+  }
+  
+  .input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  .label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 20px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  .formGroup {
+    margin-bottom: 16px;
+  }
+/*   
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+} */
+  /* Style for labels */
+  .formGroup label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  .message {
+    margin-top: 16px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  .button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    
+  }
+  
+  .button:hover {
+    background-color: darkblue;
+  }
+  /* Add the css for the inputs of the elements with ids 
+  title , description make the text area big*/
+    #title, #description {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }

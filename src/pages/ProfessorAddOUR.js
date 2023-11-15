@@ -1,0 +1,167 @@
+// components/ProjectForm.js
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import { useAuth } from '../context/AuthContext';
+import styles from '../styles/AddProject.module.css';
+
+const ProjectForm = () => {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+  const { register, handleSubmit, setValue, watch } = useForm();
+  const [departments, setDepartments] = useState([]);
+  const [domains, setDomains] = useState([]);
+  const [selectedProfessor, setselectedProfessor] = useState(null);
+  const [submissionMessage, setSubmissionMessage] = useState('');
+
+  useEffect(() => {
+    // Fetch departments from the server (replace with your actual API endpoint)
+    fetch('/api/getDepartments')
+      .then((response) => response.json())
+      .then((data) => setDepartments(data))
+      .catch((error) => console.error('Error fetching departments:', error));
+      const  ProfessorID  = user ? user.email_id : null;
+      console.log("Add Project Page of :",ProfessorID);
+      if (ProfessorID) {
+        setselectedProfessor(ProfessorID);
+      }
+  }, [router.query]);
+
+  const selectedDepartment = watch('department');
+
+  useEffect(() => {
+    // Fetch domains for the selected department from the server
+    if (selectedDepartment) {
+      fetch(`/api/getDomain?dept_id=${selectedDepartment}`)
+        .then((response) => response.json())
+        .then((data) => setDomains(data))
+        .catch((error) => console.error('Error fetching domains:', error));
+    }
+  }, [selectedDepartment]);
+  const onSubmit = async (data) => {
+    try {
+      data.professor_id = selectedProfessor;
+      // Include status and the current date in the form data
+      data.status = data.status || 'Incomplete'; // Default to 'Incomplete' if not provided
+      data.date_of_creation = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+  
+      // Extract student email IDs from the form data
+      const studentEmails = [data.student_email1, data.student_email2].filter(Boolean);
+      console.log(studentEmails);
+      delete data.student_email1;
+      delete data.student_email2;
+  
+      // Check if student email IDs exist in the database
+      const studentEmailsExist = await Promise.all(
+        studentEmails.map(async (email) => {
+          const response = await fetch(`/api/checkStudentEmail?email=${email}`);
+          return response.ok;
+        })
+      );
+  
+      if (studentEmailsExist.every((exists) => exists)) {
+        // Send data to the submitProject API endpoint
+        const response = await fetch('/api/submitProfessorOUR', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ ...data, student_emails: studentEmails }),
+        });
+  
+        if (response.ok) {
+          // Reset the form data
+          setValue('title', '');
+          setValue('details', '');
+          setValue('department', '');
+          setValue('domains', []);
+          setValue('status', '');
+          setSubmissionMessage('Project added to the database successfully!');
+          router.push(`/ProfProfile`);
+          // You can add additional logic or UI updates here
+        } else {
+          console.error('Error submitting project:', response.statusText);
+          setValue('title', '');
+          setValue('details', '');
+          setValue('department', '');
+          setValue('domains', []);
+          setValue('status', '');
+          setSubmissionMessage('Error adding project to the database');
+          // Handle the error as needed
+        }
+      } else {
+        console.log('One or more student emails do not exist in the database.');
+        // Handle the case where student emails do not exist
+      }
+    } catch (error) {
+      console.error('Error submitting project:', error.message);
+      setSubmissionMessage('Error adding project to the database');
+      // Handle the error as needed
+    }
+  };
+  
+  return (
+    <div className={styles.container}>
+
+    <form onSubmit={handleSubmit(onSubmit)}>
+    <h1 className={styles.title}>Add Project</h1>
+     <div className={styles.formGroup}> 
+      <label>Title:</label>
+      <input {...register('title')} id = "title" />
+    </div>
+    <div className={styles.formGroup}>
+      <label>Details:</label>
+      <textarea {...register('details')} id = "description"/>
+    </div>
+    <div className={styles.formGroup}>
+      <label>Department:</label>
+      <select {...register('department')}>
+        {departments.map((department) => (
+          <option key={department.dept_id} value={department.dept_id}>
+            {department.dept_name}
+          </option>
+        ))}
+      </select>
+    </div>
+    <div className={styles.formGroup}>
+      <label>Domains:</label>
+      <select multiple {...register('domains')}>
+        {domains.map((domain) => (
+          <option key={domain.domain_id} value={domain.domain_id}>
+            {domain.domain_name}
+          </option>
+        ))}
+      </select>
+    </div>
+    <div className={styles.formGroup}>
+          <label>Student Email 1:</label>
+          <input {...register('student_email1')} 
+          id = "student_email1"
+          />
+        </div>
+    <div className={styles.formGroup}>
+        <label>Student Email 2:</label>
+        <input {...register('student_email2')} 
+            id = "student_email2"
+        />
+    </div>
+    <div className={styles.formGroup}>
+      <label>Status:</label>
+      <select {...register('status')}>
+        <option value="Incomplete">Incomplete</option>
+        <option value="Completed">Completed</option>
+      </select>
+    </div>
+      <button className={styles.button} type="submit">Submit Project</button>
+      <Link href="/ProfProfile">
+        <button className={styles.button}>Back to Home</button>
+      </Link>
+       {/* Display submission message */}
+       {submissionMessage && <p className={styles.message}> {submissionMessage}</p>}
+    </form>
+    </div>
+  );
+};
+
+export default ProjectForm;

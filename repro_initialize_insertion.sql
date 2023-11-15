@@ -84,28 +84,11 @@ insert into Domain (domain_id, domain_name, department) values ('POLY', 'Polymer
 insert into Domain (domain_id, domain_name, department) values ('PE', 'Process Engineering', 'CHE');
 
 insert into Student (sname, student_email_id, batch, dept_id) values ('Kartheek' , 'kk746@snu.edu.in', '2025', 'CSE');
-insert into StudentUser (email_id, password) values ('kk746@snu.edu.in',"12345")
+insert into StudentUser (email_id, password) values ('kk746@snu.edu.in',"12345");
+insert into Student (sname, student_email_id, batch, dept_id) values ('Tejaswi' , 'ta123@snu.edu.in', '2025', 'CSE');
+insert into StudentUser (email_id, password) values ('ta123@snu.edu.in',"12345");
 insert into Professor (pname, professor_email_id, dept_id) values ('Professor1','testProfessor@gmail.com', 'CSE');
-insert into ProfessorUser (email_id, password) values ('testProfessor@gmail.com' , "123456789")
+insert into ProfessorUser (email_id, password) values ('testProfessor@gmail.com' , "123456789");
 insert into Professor (pname, professor_email_id, dept_id) values ('Professor2','testProfessor2@gmail.com', 'CSE');
-insert into ProfessorUser (email_id, password) values ('testProfesso2r@gmail.com' , "123456789")
+insert into ProfessorUser (email_id, password) values ('testProfesso2r@gmail.com' , "123456789");
 
-
-insert into Project (department, title, details, work_status, date_of_creation, is_research) values ('CSE', 'Project 2', 'Details of Project 2', 'Ongoing', '2020-01-01', false);
-insert into Project_Student (project_id, student_email_id) values (1001, 'kk746@snu.edu.in');
-insert into project_domain(project_id , domain_id) values (1001,"ML");
-insert into project_domain(project_id , domain_id) values (1001,"DS");
-
-
-insert into Project (department, title, details, work_status, date_of_creation, is_research) values ('CSE', 'Project 4', 'Details of Project 4', 'Ongoing', '2020-01-01', true);
-insert into Project_Professor(project_id, professor_email_id) values (1004, 'testProfessor@gmail.com');
-insert into project_domain(project_id , domain_id) values (1004,"ML");  
-insert into project_domain(project_id , domain_id) values (1004,"CN");
-insert into project_student_professor(project_id , student_email_id, professor_email_id) values (1002,"kk746@snu.edu.in","testProfessor@gmail.com");
-
-
-insert into Project (department, title, details, work_status, date_of_creation, is_research) values ('CSE', 'Project 3', 'Details of Project 2', 'Ongoing', '2020-01-01', true);
-insert into Project_Professor(project_id, professor_email_id) values (1003, 'testProfessor2@gmail.com');
-insert into project_domain(project_id , domain_id) values (1003,"ML");  
-insert into project_domain(project_id , domain_id) values (1003,"CN");
-insert into project_student_professor(project_id , student_email_id, professor_email_id) values (1003,"kk746@snu.edu.in","testProfessor2@gmail.com");

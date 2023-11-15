@@ -62,7 +62,7 @@ const ProfProfilePage = () => {
         </Link>
         <OURCard projects= {ProfessorOURs}/>
         <Link href="/ProfessorAddOUR" passHref> 
-          <button className={styles.button}>Add Project</button>
+          <button className={styles.button}>Add OUR</button>
         </Link>
       </div>
     </div>
