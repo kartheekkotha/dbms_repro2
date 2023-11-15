@@ -1,31 +1,38 @@
 /* styles/Navbar.module.css */
 .navbar {
-  background-color: cyan;
+  background-color: #3498db;
   color: white;
   padding: 10px;
-  align-items: center;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  span: 15px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav {
   display: flex;
-  justify-content: space-around;
-  color: white;
+  justify-content: space-between;
   align-items: center;
-  padding: 80px;
-
+  padding: 10px;
 }
 
-.a {
+.link {
   text-decoration: none;
-  padding: 50px;
+  padding: 10px;
+  margin: 0 10px;
   color: white;
 }
 
-.a:hover {
+.link:hover {
   cursor: pointer;
+  text-decoration: underline;
+  color: #ecf0f1;
+}
+.button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: blue;
   color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
 }

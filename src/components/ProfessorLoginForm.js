@@ -5,11 +5,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/LoginForm.module.css';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../context/AuthContext';
 
 const LoginForm = () => {
     const router = useRouter();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [loginError, setLoginError] = useState(false);
+    const { login } = useAuth();
     const clearInputValues = () => {
         document.getElementById('email').value = '';
         document.getElementById('password').value = '';
@@ -28,7 +30,9 @@ const LoginForm = () => {
       
         if (data2.success) {
             console.log('Professor Logged in successfully:', data2.user.email_id);
-            router.push(`/ProfProfile?professor_email_id=${data2.user.email_id}`);
+            const userData = { email_id : data2.user.email_id , role : 'Professor' };
+            login(userData)
+            router.push(`/ProfProfile`);
           // User is logged in, handle success
         } else {
             console.log('Student Logged is Failure:');

@@ -78,7 +78,7 @@ create table Project_Student(
 
 create table Project_Professor(
   project_id int,
-  professor_email_id varchar(10),
+  professor_email_id varchar(50),
   primary key (project_id, professor_email_id),
   foreign key (project_id) references Project(project_id),
   foreign key (professor_email_id) references Professor(professor_email_id)
