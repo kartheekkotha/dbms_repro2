@@ -64,6 +64,9 @@ const LoginForm = () => {
         />
       {errors.password && <p>Password is required</p>}
       <div><button type="submit" className={styles.button}>Submit</button></div>
+      <Link href="/">
+        <button className={styles.button}>Back to Home</button>
+      </Link>
       </form>
       {/* <Link href="/Projects.js" passHref>
         <button className={styles.button}>Continue</button>

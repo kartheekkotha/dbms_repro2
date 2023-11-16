@@ -13,9 +13,9 @@ const StudentSignUpPage = () => {
         <title>Student Sign Up Page</title>
       </Head>
       <StudentSignupForm />
-      <Link href="/">
+      {/* <Link href="/">
         <button className={styles.button}>Back to Home</button>
-      </Link>
+      </Link> */}
     </div>
   );
 };

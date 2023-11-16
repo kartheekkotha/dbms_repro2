@@ -13,9 +13,9 @@ const ProfessorSignUpPage = () => {
         <title>Professor Sign Up Page</title>
       </Head>
       <ProfessorSignUp />
-      <Link href="/">
+      {/* <Link href="/">
         <button className={styles.button}>Back to Home</button>
-      </Link>
+      </Link> */}
     </div>
   );
 };
