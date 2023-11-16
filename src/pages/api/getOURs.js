@@ -5,7 +5,7 @@ export default async (req, res) => {
   if (req.method === 'GET') {
     try {
       // Get sorting options, sort order, and search words from query parameters
-      const { sortBy, sortOrder, searchWords, statusFilter } = req.query;
+      const { sortBy, sortOrder, searchWords, statusFilter, departmentFilter, domainFilter } = req.query;
 
       // Build the SQL query dynamically based on the provided parameters
       let sql = `
@@ -42,7 +42,14 @@ export default async (req, res) => {
               )
               `;
             }
-            
+            if (departmentFilter && departmentFilter !== 'all') {
+              sql += ` AND p.department = '${departmentFilter}'`;
+            }
+            if (domainFilter && typeof domainFilter === 'string') {
+              const domainFilterArray = domainFilter.split(',');
+              const domainFilterConditions = domainFilterArray.map((domain) => `d.domain_id = '${domain}'`).join(' OR ');
+              sql += ` AND (${domainFilterConditions})`;
+            }
             if (sortBy && sortOrder && sortBy !== 'none' && sortOrder !== 'none') {
               sql += ` ORDER BY ${sortBy} ${sortOrder.toUpperCase()}`;
             }

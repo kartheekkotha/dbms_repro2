@@ -1,6 +1,6 @@
 /* styles/Sidebar.module.css */
 .sidebar {
-    width: 180px;
+    width: 35%;
     top: 140px;
     background-color: #004aad;
     padding: 20px;
@@ -22,15 +22,7 @@
   
 
   /* styles/Sidebar.module.css */
-.sidebar {
-    width: 180px;
-    top:140px;
-    background-color: #004aad; /* Light blur effect */
-    padding: 20px;
-    /* position: absolute; */
-    height: 100vh-95px;
-  }
-  
+
   .section {
     margin-bottom: 20px;
     width: 150px;

@@ -10,9 +10,14 @@ const Projects = () => {
   const [sortOrder, setSortOrder] = useState('asc'); // Initial sort order
   const [searchWords, setSearchWords] = useState('');
   const [statusFilter, setStatusFilter] = useState('all'); 
+  const [departmentFilter, setDepartmentFilter] = useState('all');
+  const [domainFilter, setDomainFilter] = useState([]);
+  const [departmentOptions, setDepartmentOptions] = useState([]);
+  const [domainOptions, setDomainOptions] = useState([]);
   // Fetch default projects when the component mounts
   useEffect(() => {
     fetchDefaultProjects();
+    fetchDepartmentOptions();
   }, [statusFilter]); // Empty dependency array ensures it runs only once
 
   const fetchDefaultProjects = () => {
@@ -26,10 +31,35 @@ const Projects = () => {
         console.error('Error fetching default projects:', error);
       });
   };
+  const fetchDepartmentOptions = () => {
+    // Fetch department options from the API
+    fetch('/api/getDepartments')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data",data);
+        setDepartmentOptions(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching department options:', error);
+      });
+  };
+
+  const fetchDomainOptions = (selectedDepartment) => {
+    // Fetch domain options based on the selected department
+    fetch(`/api/getDomain?dept_id=${selectedDepartment}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setDomainOptions(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching domain options:', error);
+      });
+  };
+
 
   const handleSortSubmit = () => {
     // Fetch projects from the API endpoint with the current sorting option, sort order, and search words
-    fetch(`/api/getProjects?sortBy=${sortBy}&sortOrder=${sortOrder}&searchWords=${searchWords}&statusFilter=${statusFilter}`)
+    fetch(`/api/getProjects?sortBy=${sortBy}&sortOrder=${sortOrder}&searchWords=${searchWords}&statusFilter=${statusFilter}&departmentFilter=${departmentFilter}&domainFilter=${domainFilter}`)
       .then((response) => response.json())
       .then((data) => {
         setProjects(data);
@@ -47,6 +77,18 @@ const Projects = () => {
   };
   const handleStatusFilterChange = (status) => {
     setStatusFilter(status);
+  };
+  const handleDepartmentFilterChange = (department) => {
+    setDepartmentFilter(department);
+    // Reset domain filter when department changes
+    setDomainFilter('all');
+    fetchDomainOptions(department);
+  };
+
+  const handleDomainFilterChange = (e) => {
+    // Extract domain IDs from selected options and update state
+    const selectedDomainIds = Array.from(e.target.selectedOptions, (option) => option.value);
+    setDomainFilter(selectedDomainIds);
   };
   return (
     <div>
@@ -95,28 +137,36 @@ const Projects = () => {
                 />
                 <label htmlFor="date">Date</label>
               </li>
-              <li>
-                <input
-                  type="radio"
-                  name="sortBy"
-                  id="domain"
-                  checked={sortBy === 'domain_id'}
-                  onChange={() => handleSortChange('domain_id')}
-                />
-                <label htmlFor="domain">Domain</label>
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  name="sortBy"
-                  id="dept"
-                  checked={sortBy === 'department'}
-                  onChange={() => handleSortChange('department')}
-                />
-                <label htmlFor="dept">Dept.</label>
-              </li>
               {/* Add more sorting options as needed */}
             </ul>
+          </div>
+          <div className={styles.section}>
+            <h2>Department Filter:</h2>
+            <select
+              value={departmentFilter}
+              onChange={(e) => handleDepartmentFilterChange(e.target.value)}
+            >
+              <option value="all">All</option>
+              {departmentOptions.map((dept) => (
+                <option key={dept.department_id} value={dept.dept_id}>
+                  {dept.dept_name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={styles.section}>
+            <h2>Domain Filter:</h2>
+            <select
+              multiple
+              value={domainFilter}
+              onChange={handleDomainFilterChange}
+            >
+              {domainOptions.map((domain) => (
+                <option key={domain.domain_id} value={domain.domain_id}>
+                  {domain.domain_name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className={styles.section}>
             <h2>Sort Order:</h2>
