@@ -4,10 +4,8 @@ import db from '../db';
 export default async (req, res) => {
   if (req.method === 'GET') {
     try {
-      // Get sorting options, sort order, and search words from query parameters
-      const { sortBy, sortOrder, searchWords , statusFilter} = req.query;
-
-      // Build the SQL query dynamically based on the provided parameters
+      const { sortBy, sortOrder, searchWords, statusFilter, departmentFilter, domainFilter } = req.query;
+      console.log("domainFilter",domainFilter);
       let sql = `
         SELECT 
           p.project_id, p.title, p.details, p.work_status, p.date_of_creation, p.department, p.is_research,
@@ -25,11 +23,10 @@ export default async (req, res) => {
         WHERE p.is_research = 0
       `;
 
-      
       if (statusFilter && statusFilter !== 'all') {
         sql += ` AND p.work_status = '${statusFilter}'`;
       }
-      
+
       if (searchWords) {
         sql += `
         AND (
@@ -39,24 +36,29 @@ export default async (req, res) => {
           OR s.sname LIKE '%${searchWords}%'
           OR pr.pname LIKE '%${searchWords}%'
           OR p.department LIKE '%${searchWords}%'
-          )
-          `;
-        }
-        // Add conditions for sorting and searching
-        if (sortBy && sortOrder && sortBy !== 'none' && sortOrder !== 'none') {
-          sql += ` ORDER BY ${sortBy} ${sortOrder.toUpperCase()}`;
-        }
+        )`;
+      }
+
+      if (departmentFilter && departmentFilter !== 'all') {
+        sql += ` AND p.department = '${departmentFilter}'`;
+      }
+      if (domainFilter && typeof domainFilter === 'string') {
+        const domainFilterArray = domainFilter.split(',');
+        const domainFilterConditions = domainFilterArray.map((domain) => `d.domain_id = '${domain}'`).join(' OR ');
+        sql += ` AND (${domainFilterConditions})`;
+      }
+      if (sortBy && sortOrder && sortBy !== 'none' && sortOrder !== 'none') {
+        sql += ` ORDER BY ${sortBy} ${sortOrder.toUpperCase()}`;
+      }
 
       db.query(sql, [], (err, results) => {
         if (err) {
           console.error('Error fetching projects:', err);
           res.status(500).json({ error: 'Error fetching projects' });
         } else {
-          // Process the results to create a structured project list
           const projectList = results.reduce((acc, project) => {
             const existingProject = acc.find((p) => p.project_id === project.project_id);
             if (existingProject) {
-              // Project already exists, add domain, student, and professor information
               if (project.domain_id) {
                 existingProject.domains.push({
                   domain_id: project.domain_id,
@@ -74,7 +76,6 @@ export default async (req, res) => {
                 });
               }
             } else {
-              // New project, create a new project object
               const newProject = {
                 project_id: project.project_id,
                 title: project.title,
