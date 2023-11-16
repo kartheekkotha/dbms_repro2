@@ -63,8 +63,9 @@ const ProfessorSignUp = () => {
     // student_name, student_email_id , batch , dept_id
     <div className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)}>
-      <h1 className={styles.title}>Student Sign Up</h1>
-      <label htmlFor="email">Email ID:</label>
+      <h1 className={styles.title}>Professor Sign Up</h1>
+      <div>Email ID:</div>
+      <label htmlFor="email"></label>
       <input 
         {...register('professor_email_id', { required: true })}
         type="text" 
@@ -72,7 +73,8 @@ const ProfessorSignUp = () => {
         placeholder="Enter email ID"
        />
       {errors.professor_email_id && <p>Professor email Id is required</p>}
-      <label htmlFor="password">Password:</label>
+      <div>Password:</div>
+      <label htmlFor="password"></label>
       <input 
         {...register('password', { required: true })}
         type="password" 
@@ -80,7 +82,8 @@ const ProfessorSignUp = () => {
         placeholder="Enter password" 
         />
       {errors.password && <p>Password is required</p>}
-      <label htmlFor="name">Name:</label>
+      <div>Name:</div>
+      <label htmlFor="name"></label>
       <input 
         {...register('professor_name', { required: true })}
         type="text" 
@@ -88,7 +91,8 @@ const ProfessorSignUp = () => {
         placeholder="Enter your name" 
         />
       {errors.sname && <p>Name is required</p>}
-      <label htmlFor="dept_id">Department:</label>
+      <div>Department:</div>
+      <label htmlFor="dept_id"></label>
       <select 
         {...register('dept_id', { required: true })}
         id="dept_id" 
@@ -102,7 +106,7 @@ const ProfessorSignUp = () => {
       </select>
       {errors.dept_id && <p>Department is required</p>}
 
-      <button type="submit" className={styles.button}>Submit</button>
+     <div><button type="submit" className={styles.button}>Submit</button></div> 
       </form>
       {/* <Link href="/projects" passHref>
         <button type="submit" className={styles.button}>Continue</button>

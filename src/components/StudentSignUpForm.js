@@ -66,7 +66,8 @@ const StudentSignUp = () => {
     <div className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)}>
       <h1 className={styles.title}>Student Sign Up</h1>
-      <label htmlFor="email">Email ID:</label>
+      <div>Email ID:</div>
+      <label htmlFor="email"></label>
       <input 
         {...register('student_email_id', { required: true })}
         type="text" 
@@ -74,7 +75,9 @@ const StudentSignUp = () => {
         placeholder="Enter email ID"
        />
       {errors.student_email_id && <p>Student email Id is required</p>}
-      <label htmlFor="password">Password:</label>
+      
+      <div>Password:</div>
+      <label htmlFor="password"></label>
       <input 
         {...register('password', { required: true })}
         type="password" 
@@ -82,23 +85,27 @@ const StudentSignUp = () => {
         placeholder="Enter password" 
         />
       {errors.password && <p>Password is required</p>}
-      <label htmlFor="name">Name:</label>
+      
+      <div>Name:</div>
+      <label htmlFor="name"></label>
       <input 
         {...register('student_name', { required: true })}
         type="text" 
         id="name" 
         placeholder="Enter your name" 
         />
-      {errors.sname && <p>Name is required</p>}
-      <label htmlFor="gradYear">Graduating Year :</label>
+      {errors.sname && <p>Name is required</p>}      
+      <div>Graduating Year:</div>
+      <label htmlFor="gradYear"></label>
       <input 
         {...register('batch', { required: true })}
         type="text" 
         id="batch" 
         placeholder="Enter your Graduating Year" 
         />
-      {errors.batch && <p>Graduating Year is required</p>}
-      <label htmlFor="dept_id">Department:</label>
+      {errors.batch && <p>Graduating Year is required</p>}      
+      <div>Department:</div>
+      <label htmlFor="dept_id"></label>
       <select 
         {...register('dept_id', { required: true })}
         id="dept_id" 
@@ -111,8 +118,7 @@ const StudentSignUp = () => {
         ))}
       </select>
       {errors.dept_id && <p>Department is required</p>}
-
-      <button type="submit" className={styles.button}>Submit</button>
+      <div><button type="submit" className={styles.button}>Submit</button></div>      
       </form>
       {/* <Link href="/projects" passHref>
         <button type="submit" className={styles.button}>Continue</button>

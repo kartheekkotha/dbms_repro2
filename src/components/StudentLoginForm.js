@@ -47,6 +47,7 @@ const LoginForm = () => {
     <div className={styles.container}>
         <form onSubmit={handleSubmit(onSubmit)}>
       <h1 className={styles.title}>Student Log In</h1>
+      <div>Email ID:</div>
       <input 
         {...register('student_email_id', { required: true })}
         type="text" 
@@ -54,7 +55,8 @@ const LoginForm = () => {
         placeholder="Enter email ID"
        />
       {errors.student_email_id && <p>Student email Id is required</p>}
-      <label htmlFor="password">Password:</label>
+      <div>Password:</div>
+      <label htmlFor="password"></label>
       <input 
         {...register('password', { required: true })}
         type="password" 
@@ -62,7 +64,7 @@ const LoginForm = () => {
         placeholder="Enter password" 
         />
       {errors.password && <p>Password is required</p>}
-      <button type="submit" className={styles.button}>Submit</button>
+      <div><button type="submit" className={styles.button}>Submit</button></div>      
       </form>
       {/* <Link href="/Projects.js" passHref>
         <button className={styles.button}>Continue</button>

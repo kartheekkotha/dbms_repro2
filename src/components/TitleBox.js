@@ -6,7 +6,7 @@ const TitleBox = () => {
   return (    
     <div className={styles.header}>
         <div className={styles.title}>
-        <h1>Project Title</h1>
+        <h1>Repro</h1>
         </div>
     </div>
   );
