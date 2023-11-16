@@ -1,23 +1,61 @@
 /* styles/Home.module.css */
+
 .container {
-    background-color: black;
-    color: white;
-    height: 100vh;
-  }
-  
-  .header {
-    background-color: #04306d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 70px;
-    padding: 10px;
-  }
-  
-  
-  .title {
-    text-align: center;
-    font-size: 30px;
-    font-weight: bold;
-  }
-  
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  width: 100%;
+}
+
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  filter: blur(4px);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  color: #fff;
+  justify-content: space-around;
+}
+
+.header {
+  position: relative;
+  width: auto;
+  height: 8rem;
+}
+
+.header>img {
+  object-fit: cover;
+}
+
+.iconContainer {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  gap: 20px;
+  flex-direction: column;
+  width: 30%;
+}
+
+.button {
+  margin: 0;
+  padding: 15px;
+  font-size: 1.6rem;
+  border-radius: 10px;
+  background-color: #04306D;
+  color: #fff;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #001a4a;
+}
