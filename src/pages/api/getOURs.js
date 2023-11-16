@@ -5,49 +5,49 @@ export default async (req, res) => {
   if (req.method === 'GET') {
     try {
       // Get sorting options, sort order, and search words from query parameters
-      const { sortBy, sortOrder, searchWords , statusFilter} = req.query;
+      const { sortBy, sortOrder, searchWords, statusFilter } = req.query;
 
       // Build the SQL query dynamically based on the provided parameters
       let sql = `
         SELECT 
           p.project_id, p.title, p.details, p.work_status, p.date_of_creation, p.department, p.is_research,
           d.domain_id, d.domain_name,
-          s.student_email_id, s.sname,
-          pr.professor_email_id, pr.pname
+          pr.professor_email_id, pr.pname,
+          s.student_email_id,s.sname ,s.batch,s.dept_id
         FROM 
-          Project p
-          LEFT JOIN Project_Domain pd ON p.project_id = pd.project_id
-          LEFT JOIN Domain d ON pd.domain_id = d.domain_id
-          LEFT JOIN Project_Student ps ON p.project_id = ps.project_id
-          LEFT JOIN Student s ON ps.student_email_id = s.student_email_id
-          LEFT JOIN Project_Professor pp ON p.project_id = pp.project_id
-          LEFT JOIN Professor pr ON pp.professor_email_id = pr.professor_email_id
-        WHERE p.is_research = 0
+        Project p
+        LEFT JOIN Project_Domain pd ON p.project_id = pd.project_id
+        LEFT JOIN Domain d ON pd.domain_id = d.domain_id
+        LEFT JOIN Project_Professor ps ON p.project_id = ps.project_id
+        LEFT JOIN Professor pr ON ps.professor_email_id = pr.professor_email_id
+        LEFT JOIN Project_Student_Professor psp ON p.project_id = psp.project_id
+        LEFT JOIN Student s ON psp.student_email_id = s.student_email_id
+      WHERE p.is_research = 1
       `;
 
+      // Add conditions for sorting and searching
       
       if (statusFilter && statusFilter !== 'all') {
-        sql += ` AND p.work_status = '${statusFilter}'`;
-      }
-      
+          sql += ` AND p.work_status = '${statusFilter}'`;
+        }
       if (searchWords) {
-        sql += `
-        AND (
-          p.title LIKE '%${searchWords}%'
-          OR p.details LIKE '%${searchWords}%'
-          OR d.domain_name LIKE '%${searchWords}%'
-          OR s.sname LIKE '%${searchWords}%'
-          OR pr.pname LIKE '%${searchWords}%'
-          OR p.department LIKE '%${searchWords}%'
-          )
-          `;
-        }
-        // Add conditions for sorting and searching
-        if (sortBy && sortOrder && sortBy !== 'none' && sortOrder !== 'none') {
-          sql += ` ORDER BY ${sortBy} ${sortOrder.toUpperCase()}`;
-        }
+          sql += `
+          AND (
+              p.title LIKE '%${searchWords}%'
+              OR p.details LIKE '%${searchWords}%'
+              OR d.domain_name LIKE '%${searchWords}%'
+              OR s.sname LIKE '%${searchWords}%'
+              OR pr.pname LIKE '%${searchWords}%'
+              OR p.department LIKE '%${searchWords}%'
+              )
+              `;
+            }
+            
+            if (sortBy && sortOrder && sortBy !== 'none' && sortOrder !== 'none') {
+              sql += ` ORDER BY ${sortBy} ${sortOrder.toUpperCase()}`;
+            }
 
-      db.query(sql, [], (err, results) => {
+            db.query(sql, [], (err, results) => {
         if (err) {
           console.error('Error fetching projects:', err);
           res.status(500).json({ error: 'Error fetching projects' });
@@ -62,15 +62,11 @@ export default async (req, res) => {
                   domain_id: project.domain_id,
                   domain_name: project.domain_name,
                 });
-              } else if (project.student_email_id) {
+              } 
+              if (project.student_email_id) {
                 existingProject.students.push({
                   student_email_id: project.student_email_id,
                   sname: project.sname,
-                });
-              } else if (project.professor_email_id) {
-                existingProject.professors.push({
-                  professor_email_id: project.professor_email_id,
-                  pname: project.pname,
                 });
               }
             } else {
@@ -83,16 +79,13 @@ export default async (req, res) => {
                 date_of_creation: project.date_of_creation,
                 is_research: project.is_research,
                 department: project.department,
+                pname : project.pname,
                 domains: project.domain_id
                   ? [{ domain_id: project.domain_id, domain_name: project.domain_name }]
                   : [],
                 students: project.student_email_id
                   ? [{ student_email_id: project.student_email_id, sname: project.sname }]
                   : [],
-                professors: project.professor_email_id
-                  ? [{ professor_email_id: project.professor_email_id, pname: project.pname }]
-                  : [],
-                role: project.student_email_id ? 'Student' : 'Professor',
               };
               acc.push(newProject);
             }
