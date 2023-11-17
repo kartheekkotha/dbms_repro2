@@ -1,16 +1,17 @@
 /* styles/Sidebar.module.css */
 .sidebar {
-    width: 35%;
     top: 140px;
     background-color: #004aad;
     padding: 20px;
-    /* position: absolute; */
-    height: calc(100vh - 95px);
+    justify-content: space-between;
+    /* height: calc(100vh - 95px); */
   }
   
   /* styles/ProjectCard.module.css */
   .projectCard {
     flex-grow: 1;
+    width: 100%;
+    padding-right: 3em;
   }
   
   /* styles/Project.module.css */
@@ -25,7 +26,7 @@
 
   .section {
     margin-bottom: 20px;
-    width: 150px;
+    /* width: 150px; */
   }
   
   .ul {

@@ -208,7 +208,9 @@ const Projects = () => {
             Submit
           </button>
         </div>
-        <ProjectCard projects={projects} className={styles.projectCard} />
+        <div className={styles.projectCard}>
+        <ProjectCard projects={projects}/>
+        </div>s
       </div>
     </div>
   );

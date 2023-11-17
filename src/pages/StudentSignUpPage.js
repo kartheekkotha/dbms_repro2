@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import React from 'react';
 import Head from 'next/head';
-import styles from '../styles/Start.module.css';
+// import styles from '../styles/Start.module.css';
 import StudentSignupForm from '../components/StudentSignUpForm';
 
 const StudentSignUpPage = () => {
