@@ -101,3 +101,85 @@ create table Project_Student_Professor(
   foreign key (student_email_id) references Student(student_email_id),
   foreign key (professor_email_id) references Professor(professor_email_id)
 );
+
+
+DELIMITER //
+
+CREATE PROCEDURE UpdateProject(
+    IN p_project_id INT,
+    IN p_title VARCHAR(100),
+    IN p_details VARCHAR(1000),
+    IN p_status VARCHAR(50)
+)
+BEGIN
+    UPDATE Project
+    SET
+        title = p_title,
+        details = p_details,
+        work_status = p_status
+    WHERE
+        project_id = p_project_id;
+END //
+
+DELIMITER ;
+
+
+
+trigger  Project_Delete_Trigger;
+
+DELIMITER //
+
+CREATE TRIGGER Project_Delete_Trigger
+BEFORE DELETE
+ON Project FOR EACH ROW
+BEGIN
+    -- Delete from Project_Student table
+    DELETE FROM Project_Student WHERE project_id = OLD.project_id;
+
+    -- Delete from Project_Professor table
+    DELETE FROM Project_Professor WHERE project_id = OLD.project_id;
+
+    -- Delete from Project_Domain table
+    DELETE FROM Project_Domain WHERE project_id = OLD.project_id;
+
+    -- Delete from Project_Student_Professor table
+    DELETE FROM Project_Student_Professor WHERE project_id = OLD.project_id;
+END //
+
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE UpdateProjectAndParticipants(
+    IN project_id_param INT,
+    IN professor_email_id_param VARCHAR(50),
+    IN student_email_id_1_param VARCHAR(50),
+    IN student_email_id_2_param VARCHAR(50),
+    IN title_param VARCHAR(100),
+    IN details_param VARCHAR(1000),
+    IN work_status_param VARCHAR(50)
+)
+BEGIN
+    -- Update Project table
+    UPDATE Project
+    SET title = title_param,
+        details = details_param,
+        work_status = work_status_param
+    WHERE project_id = project_id_param;
+
+    -- Delete existing entries in Project_Student_Professor table
+    DELETE FROM Project_Student_Professor
+    WHERE project_id = project_id_param;
+
+    -- Insert new entries into Project_Student_Professor table
+    IF student_email_id_1_param != 'None' THEN
+        INSERT INTO Project_Student_Professor(project_id, student_email_id, professor_email_id)
+        VALUES (project_id_param, student_email_id_1_param, professor_email_id_param);
+    END IF;
+
+    IF student_email_id_2_param != 'None' THEN
+        INSERT INTO Project_Student_Professor(project_id, student_email_id, professor_email_id)
+        VALUES (project_id_param, student_email_id_2_param, professor_email_id_param);
+    END IF;
+END //
+DELIMITER ;
