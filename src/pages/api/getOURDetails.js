@@ -2,9 +2,9 @@
 import db from '../db';
 
 export default async (req, res) => {
-  const { professorID } = req.query;
-
-  if (req.method === 'GET' && professorID) {
+  const { projectId } = req.query;
+  console.log("getProjects");
+  if (req.method === 'GET' && projectId) {
     try {
       // Implement your logic to fetch projects from the database based on professorID
       const sql =
@@ -21,9 +21,9 @@ export default async (req, res) => {
           LEFT JOIN Professor pr ON ps.professor_email_id = pr.professor_email_id
           LEFT JOIN Project_Student_Professor psp ON p.project_id = psp.project_id
           LEFT JOIN Student s ON psp.student_email_id = s.student_email_id
-        WHERE p.is_research = 1 and pr.professor_email_id = ?`;
+        WHERE p.is_research = 1 and p.project_id = ?`;
 
-      db.query(sql, [professorID], (err, results) => {
+      db.query(sql, [projectId], (err, results) => {
         if (err) {
           console.error('Error fetching projects:', err);
           res.status(500).json({ error: 'Error fetching projects' });
@@ -45,7 +45,7 @@ export default async (req, res) => {
                   student_id: project.student_email_id,
                   sname: project.sname,
                 });
-              }
+            }
               }
             } else {
               // New project, create a new project object
