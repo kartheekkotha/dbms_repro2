@@ -1,5 +1,6 @@
 // components/ProjectCard.js
 import React from 'react';
+import Link from 'next/link';
 import styles from '../styles/ProjectCard.module.css';
 
 
@@ -50,7 +51,10 @@ const ProjectCard = ({ projects }) => {
                 <td>{project.work_status}</td>
                 <td>{project.date_of_creation}</td>
                 <td>
-                  <button className={styles.editButton}>Edit</button>
+                <Link href={`/editProfessorProject/?projectId=${project.project_id}`}>
+                    <button className={styles.editButton}>Edit</button>
+                  </Link>
+                  
                 </td>
                 {/* Add more cells as needed */}
               </tr>
