@@ -54,9 +54,9 @@ const StudProfilePage = () => {
         <h1>Student Profile</h1>
         <StudentDetailsComponent studentDetails={studentDetails} />
         {/* Button to edit the studentDetials */}
-        <Link href="/editStudentDetails" passHref>
+        {/* <Link href="/editStudentDetails" passHref>
           <button className={styles.button}>Edit Profile</button>
-        </Link>
+        </Link> */}
         <ProjectCard projects= {studentProjects}/> 
         <Link href="/StudentAddProject" passHref> 
           <button className={styles.button}>Add Project</button>
