@@ -63,10 +63,11 @@ const LoginForm = () => {
         placeholder="Enter password" 
         />
       {errors.password && <p>Password is required</p>}
-      <div><button type="submit" className={styles.button}>Submit</button></div>
+      <div className={styles.buttons}><button type="submit" className={styles.button}>Submit</button>
       <Link href="/">
         <button className={styles.button}>Back to Home</button>
       </Link>
+      </div>
       </form>
       {/* <Link href="/Projects.js" passHref>
         <button className={styles.button}>Continue</button>

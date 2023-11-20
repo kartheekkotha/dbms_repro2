@@ -5,7 +5,7 @@
     padding: 20px;
     border-radius: 10px;
     margin: 20px auto;
-    max-width: 300px;
+    width: fit-content;
     text-align: center;
     line-height: 30px;
     display: flex;

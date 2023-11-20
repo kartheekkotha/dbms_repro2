@@ -28,7 +28,7 @@ const Navbar = () => {
           <span className={styles.link}>Projects</span>
         </Link>
         <Link href="/OURs" passHref>
-          <span className={styles.link}>Ours</span>
+          <span className={styles.link}>OURs</span>
         </Link>
         <Link href="/aboutUs" passHref>
           <span className={styles.link}>About Us</span>
@@ -36,9 +36,8 @@ const Navbar = () => {
         <Link href = {page} passHref>
           <span className={styles.link}>Profile</span>
         </Link>
-        {/* add a button to handleLogout */}
-        <button onClick={handleLogout} className={styles.button} >Logout</button>
       </nav>
+        <button onClick={handleLogout} className={styles.button} >Logout</button>
     </div>
   );
 };

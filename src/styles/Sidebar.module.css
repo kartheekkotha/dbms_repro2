@@ -1,11 +1,11 @@
 /* styles/Sidebar.module.css */
 .sidebar {
-    width: 180px;
+    width: fit-content;
     top:140px;
     background-color: #004aad; /* Light blur effect */
     padding: 20px;
     /* position: absolute; */
-    height: 100vh-95px;
+    height: 100vh;
   }
   
   .section {

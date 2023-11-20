@@ -29,7 +29,7 @@ const ProjectCard = ({ projects, userName }) => {
               <th>Domains</th>
               <th>Status</th>
               <th>Date of Creation</th>
-              <th>User</th>
+              <th>Creator</th>
               <th>Role</th>
                {/* New column for the Edit button */}
               {/* Add more columns as needed */}

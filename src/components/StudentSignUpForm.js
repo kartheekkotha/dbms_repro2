@@ -118,10 +118,12 @@ const StudentSignUp = () => {
         ))}
       </select>
       {errors.dept_id && <p>Department is required</p>}
-      <div><button type="submit" className={styles.button}>Submit</button></div> 
+      <div>
+        <button type="submit" className={styles.button}>Submit</button>
       <Link href="/">
         <button className={styles.button}>Back to Home</button>
       </Link>     
+      </div> 
       </form>
       {/* <Link href="/projects" passHref>
         <button type="submit" className={styles.button}>Continue</button>
